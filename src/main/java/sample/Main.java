@@ -19,7 +19,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../test1.fxml")));
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("地铁调度系统");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }

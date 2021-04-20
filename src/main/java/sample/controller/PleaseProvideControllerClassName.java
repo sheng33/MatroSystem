@@ -60,10 +60,10 @@ public class PleaseProvideControllerClassName implements Initializable {
 
     @FXML
     private Color x4;
-
+    ObservableList<RuningTimeDao> data =FXCollections.observableArrayList();
 
     public void showList() throws SQLException {
-        ObservableList<RuningTimeDao> data =FXCollections.observableArrayList();
+
         ResultSet resultSet = jdbcUtil.getRuningTimeAll();
         while(resultSet.next()){
             RuningTimeDao dao = new RuningTimeDao();
@@ -88,7 +88,6 @@ public class PleaseProvideControllerClassName implements Initializable {
         nowSite.setMinWidth(100);
         line.setMinWidth(100);
         runTime.setMinWidth(200);
-
         runingTime.setItems(data);
     }
 

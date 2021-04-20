@@ -54,20 +54,12 @@ fx:controller="sample.controller.PleaseProvideControllerClassName">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
-        <Menu mnemonicParsing="false" text="File">
+        <Menu mnemonicParsing="false" text="数据录入">
           <items>
-            <MenuItem mnemonicParsing="false" text="New" />
-            <MenuItem mnemonicParsing="false" text="Open…" />
-            <Menu mnemonicParsing="false" text="Open Recent" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Close" />
-            <MenuItem mnemonicParsing="false" text="Save" />
-            <MenuItem mnemonicParsing="false" text="Save As…" />
-            <MenuItem mnemonicParsing="false" text="Revert" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Preferences…" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Quit" />
+            <MenuItem mnemonicParsing="false" text="站点信息录入" />
+            <MenuItem mnemonicParsing="false" text="线路信息录入" />
+            <MenuItem mnemonicParsing="false" text="停靠层信息录入" />
+            <MenuItem mnemonicParsing="false" text="列车信息录入" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Edit">
