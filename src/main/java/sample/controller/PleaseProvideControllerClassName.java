@@ -2,11 +2,14 @@ package sample.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Pagination;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import lombok.SneakyThrows;
@@ -20,9 +23,6 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class PleaseProvideControllerClassName implements Initializable {
-
-
-
     @FXML
     private Color x5;
 
@@ -60,10 +60,36 @@ public class PleaseProvideControllerClassName implements Initializable {
 
     @FXML
     private Color x4;
+    @FXML
+    private Pagination page;
     ObservableList<RuningTimeDao> data =FXCollections.observableArrayList();
+    @FXML
+    void scroll(ScrollEvent event) {
+        System.out.println("页面滚动");
+    }
 
-    public void showList() throws SQLException {
+    @FXML
+    void scrollFinished(ScrollEvent event) {
+        System.out.println("页面滚动结束");
+    }
 
+    @FXML
+    void scrollStarted(ScrollEvent event) {
+        System.out.println("页面滚动开始");
+
+    }
+
+    @FXML
+    void scrollTo(ActionEvent event) {
+        System.out.println("页面滚动A");
+
+    }
+
+    @FXML
+    void scrollToColumn(ActionEvent event) {
+        System.out.println("页面滚动B");
+    }
+    public void init() throws SQLException {
         ResultSet resultSet = jdbcUtil.getRuningTimeAll();
         while(resultSet.next()){
             RuningTimeDao dao = new RuningTimeDao();
@@ -88,12 +114,13 @@ public class PleaseProvideControllerClassName implements Initializable {
         nowSite.setMinWidth(100);
         line.setMinWidth(100);
         runTime.setMinWidth(200);
+        train.setResizable(true);
         runingTime.setItems(data);
     }
 
     @SneakyThrows
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        showList();
+            init();
     }
 }
