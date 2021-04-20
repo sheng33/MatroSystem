@@ -9,10 +9,14 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import lombok.SneakyThrows;
 import sample.Dao.RuningTimeDao;
 import sample.Dao.RuningTimeEnum;
+import sample.util.jdbcUtil;
 
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class PleaseProvideControllerClassName implements Initializable {
@@ -58,28 +62,39 @@ public class PleaseProvideControllerClassName implements Initializable {
     private Color x4;
 
 
-    public void showList(){
-         ObservableList<RuningTimeDao> data =
-                FXCollections.observableArrayList();
-         data.add( new RuningTimeDao("1",1,1,1,1,1,"2020-12-11 22:22:22"));
-         data.add( new RuningTimeDao("1",1,1,1,1,1,"2020-12-11 22:22:22"));
-        train.setCellValueFactory(new PropertyValueFactory<>("trainId"));
+    public void showList() throws SQLException {
+        ObservableList<RuningTimeDao> data =FXCollections.observableArrayList();
+        ResultSet resultSet = jdbcUtil.getRuningTimeAll();
+        while(resultSet.next()){
+            RuningTimeDao dao = new RuningTimeDao();
+            dao.setId(resultSet.getInt(1));
+            dao.setNowSite(jdbcUtil.getSiteName(resultSet.getInt(2)));
+            dao.setTrain(jdbcUtil.getTrainName(resultSet.getInt(3)));
+            dao.setLine(jdbcUtil.getLineName(resultSet.getInt(4)));
+            dao.setNextSite(jdbcUtil.getSiteName(resultSet.getInt(5)));
+            dao.setState(RuningTimeEnum.getName(resultSet.getInt(6)));
+            dao.setRunTime(resultSet.getString(7));
+            data.add(dao);
+        }
+        train.setCellValueFactory(new PropertyValueFactory<>("train"));
         state.setCellValueFactory(new PropertyValueFactory<>("state"));
         runTime.setCellValueFactory(new PropertyValueFactory<>("runTime"));
-        nextSite.setCellValueFactory(new PropertyValueFactory<>("nextSiteId"));
-        nowSite.setCellValueFactory(new PropertyValueFactory<>("nowSiteId"));
-        line.setCellValueFactory(new PropertyValueFactory<>("lineId"));
-
+        nextSite.setCellValueFactory(new PropertyValueFactory<>("nextSite"));
+        nowSite.setCellValueFactory(new PropertyValueFactory<>("nowSite"));
+        line.setCellValueFactory(new PropertyValueFactory<>("line"));
         train.setMinWidth(100);
+        state.setMinWidth(100);
+        nextSite.setMinWidth(100);
+        nowSite.setMinWidth(100);
+        line.setMinWidth(100);
+        runTime.setMinWidth(200);
 
         runingTime.setItems(data);
     }
 
+    @SneakyThrows
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println("Test");
-        System.out.println(RuningTimeEnum.getName(2));
-        System.out.println(RuningTimeEnum.getValue("等待中"));
         showList();
     }
 }

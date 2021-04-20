@@ -10,11 +10,11 @@ import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RuningTimeDao {
-    private String id;
-    private int nowSiteId;
-    private int trainId;
-    private int lineId;
-    private int nextSiteId;
-    private int state;
+    private int id;
+    private String nowSite;
+    private String train;
+    private String line;
+    private String nextSite;
+    private String state;
     private String runTime;
 }
