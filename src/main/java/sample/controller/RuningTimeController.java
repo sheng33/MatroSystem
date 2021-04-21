@@ -103,7 +103,6 @@ public class RuningTimeController implements Initializable {
     }
     @FXML
     void addTrain(ActionEvent event) {
-
         Platform.runLater(()->{
             Stage saveDiary = StageManager.getStage("saveDiary");
             // 每次创建场景前，判断该场景是否被创建过，创建过直接显示场景即可，无需多次创建，但是需要清除上次输入的数据
@@ -115,7 +114,7 @@ public class RuningTimeController implements Initializable {
                     Stage stage = new Stage();
                     stage.setScene(scene);
                     stage.setTitle("添加数据");
-                    stage.initStyle(StageStyle.TRANSPARENT);
+                    stage.setResizable(false);
                     stage.show();
                     // 存放Scene
                     StageManager.put("saveDiary", stage);
@@ -198,7 +197,7 @@ public class RuningTimeController implements Initializable {
     @SneakyThrows
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//            init();
+//      init();
         addTrain(null);
     }
 }
