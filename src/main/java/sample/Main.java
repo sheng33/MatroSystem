@@ -16,7 +16,8 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../main.fxml")));
         primaryStage.setTitle("地铁调度系统");
         primaryStage.setScene(new Scene(root));
-        primaryStage.show();
+        primaryStage.setResizable(false);
+//        primaryStage.show();
     }
 
 
