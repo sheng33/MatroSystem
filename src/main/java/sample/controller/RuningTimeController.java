@@ -197,7 +197,7 @@ public class RuningTimeController implements Initializable {
     @SneakyThrows
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//      init();
+//        init();
         addTrain(null);
     }
 }

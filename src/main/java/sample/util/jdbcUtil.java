@@ -21,7 +21,7 @@ public  class jdbcUtil {
     }
     public static String getSiteName(int Id) throws SQLException{
         Statement stmt = conn.createStatement();
-        String sql = "Select siteName From SiteTable Where now_siteId = "+Id;
+        String sql = "Select siteName From SiteTable Where nowSiteId = "+Id;
         ResultSet resultSet = stmt.executeQuery(sql);
         while(resultSet.next()){
             return resultSet.getString(1);
@@ -31,12 +31,17 @@ public  class jdbcUtil {
 
     public static String getTrainName(int Id) throws SQLException {
         Statement stmt = conn.createStatement();
-        String sql = "Select trainName From train_Table Where trainId = "+Id;
+        String sql = "Select trainName From trainTable Where trainId = "+Id;
         ResultSet resultSet = stmt.executeQuery(sql);
         while(resultSet.next()){
             return resultSet.getString(1);
         }
         return resultSet.getString(1);
+    }
+    public static ResultSet getAllLineInfo() throws SQLException{
+        Statement stmt = conn.createStatement();
+        String sql = "SELECT * FROM LineTable";
+        return stmt.executeQuery(sql);
     }
     public static String getLineName(int Id) throws SQLException {
         Statement stmt = conn.createStatement();
@@ -63,7 +68,7 @@ public  class jdbcUtil {
 
     public static int addTrain(TrainDao trainDao) throws SQLException {
         String sql = "INSERT INTO trainTable(trainName,trainType,serviceTime)" +
-                " Values("+trainDao.getTrainName()+","+trainDao.getTrainType()+","+trainDao.getServiceTime()+")";
+                " Values('" +trainDao.getTrainName()+ "'," +trainDao.getTrainType()+ ",'" +trainDao.getServiceTime()+ "')";
         Statement stmt = conn.createStatement();
         return stmt.executeUpdate(sql);
     }
