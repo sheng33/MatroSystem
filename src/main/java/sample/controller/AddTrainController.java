@@ -1,13 +1,14 @@
 package sample.controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-
 import javafx.scene.input.MouseEvent;
 import sample.Dao.LineDao;
 import sample.Dao.TrainDao;
 import sample.Dao.TrainTypeEnum;
+import sample.util.AlertUtil;
 import sample.util.jdbcUtil;
 
 import java.net.URL;
@@ -16,10 +17,7 @@ import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.ResourceBundle;
-
-import static sample.Dao.TrainTypeEnum.getAll;
 
 public class AddTrainController implements Initializable {
 
@@ -119,10 +117,13 @@ public class AddTrainController implements Initializable {
                 jdbcUtil.addTrain(trainDao);
             } catch (SQLException throwables) {
                 System.out.println("添加失败");
+                AlertUtil.openAlert("添加失败", throwables.getMessage(), Alert.AlertType.INFORMATION);
                 throwables.printStackTrace();
             }
         }
         System.out.println("鼠标点击提交");
+        AlertUtil.openAlert("创建成功","创建成功", Alert.AlertType.INFORMATION);
+        Platform.exit();
     }
 
 }

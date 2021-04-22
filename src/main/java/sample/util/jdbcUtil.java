@@ -2,6 +2,7 @@ package sample.util;
 
 import sample.Dao.LayerDao;
 import sample.Dao.LineSiteDao;
+import sample.Dao.SiteDao;
 import sample.Dao.TrainDao;
 
 import java.sql.*;
@@ -58,7 +59,12 @@ public  class jdbcUtil {
         Statement stmt = conn.createStatement();
         return stmt.executeQuery(sql);
     }
-
+    public static int addSite(SiteDao siteDao) throws SQLException{
+        String sql = "INSERT INTO SiteTable(siteName,startTime,endTime)" +
+                "VALUES('"+siteDao.getSiteName()+"','"+siteDao.getStartTime()+"','"+siteDao.getEndTime()+"')";
+        Statement statement = conn.createStatement();
+        return statement.executeUpdate(sql);
+    }
     public static int addLayer(LayerDao layerDao) throws SQLException {
         String sql = "INSERT  INTO layerTable(nowSiteId,layerlevel,state)" +
                 "VALUES("+layerDao.getNowSiteId()+","+layerDao.getLayerLevel()+","+layerDao.getState()+")";

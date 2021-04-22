@@ -86,11 +86,7 @@ public class RuningTimeController implements Initializable {
     @FXML
     private MenuItem addSite;
 
-    @FXML
-    void addSite(ActionEvent event) {
-        System.out.println("站点信息录入");
-        System.out.println(event);
-    }
+
     @FXML
     void addLayer(ActionEvent event) {
         System.out.println("停靠层信息录入");
@@ -103,12 +99,20 @@ public class RuningTimeController implements Initializable {
     }
     @FXML
     void addTrain(ActionEvent event) {
+        getStage("../../addtrain.fxml","addTrain");
+    }
+    @FXML
+    void addSite(ActionEvent event) {
+        getStage("../../addSite.fxml","addSite");
+    }
+
+    private void getStage(String url,String stageName) {
         Platform.runLater(()->{
-            Stage saveDiary = StageManager.getStage("saveDiary");
+            Stage saveDiary = StageManager.getStage(stageName);
             // 每次创建场景前，判断该场景是否被创建过，创建过直接显示场景即可，无需多次创建，但是需要清除上次输入的数据
             if(Objects.isNull(saveDiary)) {
                 try {
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../addtrain.fxml"));
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(url));
                     Parent pane = fxmlLoader.load();
                     Scene scene = new Scene(pane);
                     Stage stage = new Stage();
@@ -117,7 +121,7 @@ public class RuningTimeController implements Initializable {
                     stage.setResizable(false);
                     stage.show();
                     // 存放Scene
-                    StageManager.put("saveDiary", stage);
+                    StageManager.put(stageName, stage);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -198,6 +202,7 @@ public class RuningTimeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 //        init();
-        addTrain(null);
+        addSite(null);
+//        addTrain(null);
     }
 }
