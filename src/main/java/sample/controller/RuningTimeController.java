@@ -89,8 +89,7 @@ public class RuningTimeController implements Initializable {
 
     @FXML
     void addLayer(ActionEvent event) {
-        System.out.println("停靠层信息录入");
-        System.out.println(event);
+        getStage("../../addLayer.fxml","添加停靠层信息");
     }
     @FXML
     void addLine(ActionEvent event) {
@@ -99,11 +98,11 @@ public class RuningTimeController implements Initializable {
     }
     @FXML
     void addTrain(ActionEvent event) {
-        getStage("../../addtrain.fxml","addTrain");
+        getStage("../../addtrain.fxml","添加列车信息");
     }
     @FXML
     void addSite(ActionEvent event) {
-        getStage("../../addSite.fxml","addSite");
+        getStage("../../addSite.fxml","添加站点信息");
     }
 
     private void getStage(String url,String stageName) {
@@ -117,7 +116,7 @@ public class RuningTimeController implements Initializable {
                     Scene scene = new Scene(pane);
                     Stage stage = new Stage();
                     stage.setScene(scene);
-                    stage.setTitle("添加数据");
+                    stage.setTitle(stageName);
                     stage.setResizable(false);
                     stage.show();
                     // 存放Scene
@@ -202,7 +201,8 @@ public class RuningTimeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 //        init();
-        addSite(null);
+//        addSite(null);
 //        addTrain(null);
+        addLayer(null);
     }
 }

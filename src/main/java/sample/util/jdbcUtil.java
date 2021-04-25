@@ -87,4 +87,13 @@ public  class jdbcUtil {
         return stmt.executeUpdate(sql);
     }
 
+    public static int getSiteNameId(String text) throws SQLException {
+        Statement stmt = conn.createStatement();
+        String sql = "Select nowSiteId From SiteTable Where siteName = '"+text+"'";
+        ResultSet resultSet = stmt.executeQuery(sql);
+        while(resultSet.next()){
+            return resultSet.getInt(1);
+        }
+        return -1;
+    }
 }
