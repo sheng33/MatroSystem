@@ -17,7 +17,7 @@ public class Main extends Application {
         primaryStage.setTitle("地铁调度系统");
         primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);
-//        primaryStage.show();
+        primaryStage.show();
     }
 
 

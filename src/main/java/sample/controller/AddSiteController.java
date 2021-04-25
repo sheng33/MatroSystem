@@ -3,16 +3,17 @@ package sample.controller;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.SwipeEvent;
 import sample.Dao.SiteDao;
 import sample.util.AlertUtil;
 import sample.util.jdbcUtil;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class AddSiteController implements Initializable {

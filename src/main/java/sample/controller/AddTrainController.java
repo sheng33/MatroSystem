@@ -57,8 +57,8 @@ public class AddTrainController implements Initializable {
                 LineDao lineDao = new LineDao();
                 lineDao.setLineId(resultSet.getInt(1));
                 lineDao.setLineName(resultSet.getString(2));
-                lineDao.setFirstRunTime(resultSet.getDate(3));
-                lineDao.setEndRunTime(resultSet.getDate(4));
+                lineDao.setFirstRunTime(resultSet.getString(3));
+                lineDao.setEndRunTime(resultSet.getString(4));
                 lineDaos.add(lineDao);
             }
             for (int i = 0; i < lineDaos.size(); i++) {

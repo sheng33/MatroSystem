@@ -1,9 +1,6 @@
 package sample.util;
 
-import sample.Dao.LayerDao;
-import sample.Dao.LineSiteDao;
-import sample.Dao.SiteDao;
-import sample.Dao.TrainDao;
+import sample.Dao.*;
 
 import java.sql.*;
 
@@ -29,6 +26,15 @@ public  class jdbcUtil {
         }
         return resultSet.getString(1);
     }
+    public static int getSiteId(String siteName) throws SQLException{
+        Statement stmt = conn.createStatement();
+        String sql = "Select nowSiteId From SiteTable Where siteName = '"+siteName+"'";
+        ResultSet resultSet = stmt.executeQuery(sql);
+        while(resultSet.next()){
+            return resultSet.getInt(1);
+        }
+        return -1;
+    }
 
     public static String getTrainName(int Id) throws SQLException {
         Statement stmt = conn.createStatement();
@@ -53,6 +59,31 @@ public  class jdbcUtil {
         }
         return resultSet.getString(1);
     }
+    public static int getLineId(String name) throws SQLException {
+        Statement stmt = conn.createStatement();
+        String sql = "Select lineId From LineTable Where lineName = '"+name+"'";
+        ResultSet resultSet = stmt.executeQuery(sql);
+        while(resultSet.next()){
+            return resultSet.getInt(1);
+        }
+        return -1;
+    }
+    public static int getLayerId(int siteId,int layerLevel) throws SQLException {
+        Statement stmt = conn.createStatement();
+        String sql = "Select layerId FROM layerTable Where nowSiteId="+siteId+"AND layerLevel="+layerLevel;
+        ResultSet resultSet = stmt.executeQuery(sql);
+        while(resultSet.next()){
+            return resultSet.getInt(1);
+        }
+        return -1;
+    }
+    public static ResultSet getLayerAllBySiteId(int siteId) throws SQLException {
+        Statement stmt = conn.createStatement();
+        String sql = "Select * FROM layerTable Where nowSiteId="+siteId;
+        System.out.println(sql);
+        return  stmt.executeQuery(sql);
+    }
+
 
     public static ResultSet getRuningTimeAll() throws SQLException {
         String sql = "SELECT * FROM runingTimeTable";
@@ -78,11 +109,19 @@ public  class jdbcUtil {
         Statement stmt = conn.createStatement();
         return stmt.executeUpdate(sql);
     }
+    public static int addLine(LineDao lineDao) throws SQLException{
+        String sql = "INSERT INTO LineTable(lineName,firstRunTime,endRunTime)" +
+                " Values('" +lineDao.getLineName()+ "','" +lineDao.getFirstRunTime()+ "','" +lineDao.getEndRunTime()+ "')";
+        System.out.println(sql);
+        Statement stmt = conn.createStatement();
+        return stmt.executeUpdate(sql);
+    }
 
     public static int addLineSiteTable(LineSiteDao lineSiteDao) throws SQLException {
-        String sql = "INSERT INTO lineSiteTable(nowSiteId,layerId,operationDirection,linePosition,isStartSite,isEndSite)" +
-                "VALUES ("+lineSiteDao.getNowSiteId()+","+lineSiteDao.getLayerId()+","+lineSiteDao.getLayerId()+","+lineSiteDao.getOperationDirection()+","+lineSiteDao.getLinePosition()+"" +
+        String sql = "INSERT INTO lineSiteTable(lineId,nowSiteId,layerId,operationDirection,linePosition,isStartSite,isEndSite)" +
+                "VALUES ("+lineSiteDao.getLineId()+","+lineSiteDao.getNowSiteId()+","+lineSiteDao.getLayerId()+",'"+lineSiteDao.getOperationDirection()+"',"+lineSiteDao.getLinePosition()+"" +
                 ","+lineSiteDao.getIsStartSite()+","+lineSiteDao.getIsEndSite()+")";
+        System.out.println(sql);
         Statement stmt = conn.createStatement();
         return stmt.executeUpdate(sql);
     }

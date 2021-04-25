@@ -1,36 +1,25 @@
 package sample.controller;
 
-import com.dooapp.fxform.FXForm;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.ScrollEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import lombok.SneakyThrows;
-import sample.Dao.LineDao;
 import sample.Dao.RuningTimeDao;
 import sample.Dao.RuningTimeEnum;
-import sample.Dao.TrainDao;
 import sample.util.StageManager;
 import sample.util.jdbcUtil;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -89,46 +78,22 @@ public class RuningTimeController implements Initializable {
 
     @FXML
     void addLayer(ActionEvent event) {
-        getStage("../../addLayer.fxml","添加停靠层信息");
+        StageManager.getStage("../../addLayer.fxml","添加停靠层信息");
     }
     @FXML
     void addLine(ActionEvent event) {
-        System.out.println("线路信息录入");
-        System.out.println(event);
+        StageManager.getStage("../../addLine.fxml","添加线路信息");
     }
     @FXML
     void addTrain(ActionEvent event) {
-        getStage("../../addtrain.fxml","添加列车信息");
+        StageManager.getStage("../../addtrain.fxml","添加列车信息");
     }
     @FXML
     void addSite(ActionEvent event) {
-        getStage("../../addSite.fxml","添加站点信息");
+        StageManager.getStage("../../addSite.fxml","添加站点信息");
     }
 
-    private void getStage(String url,String stageName) {
-        Platform.runLater(()->{
-            Stage saveDiary = StageManager.getStage(stageName);
-            // 每次创建场景前，判断该场景是否被创建过，创建过直接显示场景即可，无需多次创建，但是需要清除上次输入的数据
-            if(Objects.isNull(saveDiary)) {
-                try {
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(url));
-                    Parent pane = fxmlLoader.load();
-                    Scene scene = new Scene(pane);
-                    Stage stage = new Stage();
-                    stage.setScene(scene);
-                    stage.setTitle(stageName);
-                    stage.setResizable(false);
-                    stage.show();
-                    // 存放Scene
-                    StageManager.put(stageName, stage);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                saveDiary.show();
-            }
-        });
-    }
+
 
     @FXML
     public void cancel(ActionEvent actionEvent) {
@@ -141,7 +106,6 @@ public class RuningTimeController implements Initializable {
         }
     }
 
-    ObservableList<RuningTimeDao> data =FXCollections.observableArrayList();
     @FXML
     void scroll(ScrollEvent event) {
         System.out.println(event.getTouchCount());
@@ -164,7 +128,7 @@ public class RuningTimeController implements Initializable {
         System.out.println("页面滚动A");
 
     }
-
+    ObservableList<RuningTimeDao> data =FXCollections.observableArrayList();
     @FXML
     void scrollToColumn(ActionEvent event) {
         System.out.println("页面滚动B");
@@ -200,9 +164,10 @@ public class RuningTimeController implements Initializable {
     @SneakyThrows
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        init();
+        init();
 //        addSite(null);
 //        addTrain(null);
-        addLayer(null);
+//        addLayer(null);
+//        addLine(null);
     }
 }
