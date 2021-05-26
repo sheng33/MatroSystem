@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Pagination;
@@ -15,7 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import lombok.SneakyThrows;
-import sample.Dao.RuningTimeDao;
+import sample.Dao.RuningTimeVo;
 import sample.Dao.RuningTimeEnum;
 import sample.util.StageManager;
 import sample.util.jdbcUtil;
@@ -23,6 +24,7 @@ import sample.util.jdbcUtil;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -34,25 +36,25 @@ public class RuningTimeController implements Initializable {
     private Font x6;
 
     @FXML
-    private TableView<RuningTimeDao> runingTime;
+    private TableView<RuningTimeVo> runingTime;
 
     @FXML
-    private TableColumn<RuningTimeDao,Integer> train;
+    private TableColumn<RuningTimeVo,Integer> train;
 
     @FXML
-    private TableColumn<RuningTimeDao,Integer> line;
+    private TableColumn<RuningTimeVo,Integer> line;
 
     @FXML
-    private TableColumn<RuningTimeDao,Integer> nowSite;
+    private TableColumn<RuningTimeVo,Integer> nowSite;
 
     @FXML
-    private TableColumn<RuningTimeDao,Integer> nextSite;
+    private TableColumn<RuningTimeVo,Integer> nextSite;
 
     @FXML
-    private TableColumn<RuningTimeDao,String> runTime;
+    private TableColumn<RuningTimeVo,String> runTime;
 
     @FXML
-    private TableColumn<RuningTimeDao,Integer> state;
+    private TableColumn<RuningTimeVo,Integer> state;
     @FXML
     private Color x2;
 
@@ -128,7 +130,8 @@ public class RuningTimeController implements Initializable {
         System.out.println("页面滚动A");
 
     }
-    ObservableList<RuningTimeDao> data =FXCollections.observableArrayList();
+    ObservableList<RuningTimeVo> data =FXCollections.observableArrayList();
+    ArrayList<RuningTimeVo> dataList = new ArrayList<>();
     @FXML
     void scrollToColumn(ActionEvent event) {
         System.out.println("页面滚动B");
@@ -136,7 +139,7 @@ public class RuningTimeController implements Initializable {
     public void init() throws SQLException {
         ResultSet resultSet = jdbcUtil.getRuningTimeAll();
         while(resultSet.next()){
-            RuningTimeDao dao = new RuningTimeDao();
+            RuningTimeVo dao = new RuningTimeVo();
             dao.setId(resultSet.getInt(1));
             dao.setNowSite(jdbcUtil.getSiteName(resultSet.getInt(2)));
             dao.setTrain(jdbcUtil.getTrainName(resultSet.getInt(3)));
@@ -144,6 +147,7 @@ public class RuningTimeController implements Initializable {
             dao.setNextSite(jdbcUtil.getSiteName(resultSet.getInt(5)));
             dao.setState(RuningTimeEnum.getName(resultSet.getInt(6)));
             dao.setRunTime(resultSet.getString(7));
+            dataList.add(dao);
             data.add(dao);
         }
         train.setCellValueFactory(new PropertyValueFactory<>("train"));
@@ -169,5 +173,32 @@ public class RuningTimeController implements Initializable {
 //        addTrain(null);
 //        addLayer(null);
 //        addLine(null);
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    while(true){
+                        Thread.sleep(1000);
+                        if (dataList.isEmpty()){
+                            init();
+                        }
+                        update();
+                    }
+                } catch (InterruptedException | SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        new Thread(runnable).start();
     }
+    void update(){
+        this.data.clear();
+        this.data.addAll(dataList);
+    }
+
+    //模拟列车运行
+    private void simulation(){
+
+    }
+
 }

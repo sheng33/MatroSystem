@@ -61,6 +61,7 @@ public class AddTrainController implements Initializable {
                 lineDao.setEndRunTime(resultSet.getString(4));
                 lineDaos.add(lineDao);
             }
+
             for (int i = 0; i < lineDaos.size(); i++) {
                 MenuItem menuItem = new MenuItem();
                 menuItem.setId(String.valueOf(lineDaos.get(i).getLineId()));
@@ -85,7 +86,7 @@ public class AddTrainController implements Initializable {
         initLine(); // 初始化线路菜单
     }
     @FXML
-    void onClicka(MouseEvent event) {
+    void onClicka(MouseEvent event) throws SQLException {
         int access = 0;
         if (trainName.getText().trim().equals("")){
             trainName.setPromptText("不能为空");
@@ -109,10 +110,10 @@ public class AddTrainController implements Initializable {
         }
         if (access==0){
             TrainDao trainDao = new TrainDao();
-            System.out.println("点击的列车类型:"+trainType.getText()+"  id:"+trainType.getId());
             trainDao.setTrainName(trainName.getText());
             trainDao.setTrainType(trainType.getId());
             trainDao.setServiceTime(serviceTime.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            trainDao.setLineId(jdbcUtil.getLineId(lineName.getText()));
             try {
                 jdbcUtil.addTrain(trainDao);
             } catch (SQLException throwables) {
@@ -120,6 +121,7 @@ public class AddTrainController implements Initializable {
                 AlertUtil.openAlert("添加失败", throwables.getMessage(), Alert.AlertType.INFORMATION);
                 throwables.printStackTrace();
             }
+
         }
         System.out.println("鼠标点击提交");
         AlertUtil.openAlert("创建成功","创建成功", Alert.AlertType.INFORMATION);

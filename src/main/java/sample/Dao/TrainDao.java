@@ -11,6 +11,7 @@ public class TrainDao {
     private int trainId;
     private String trainName;
     private String trainType;
+    private int lineId;
     private String serviceTime;
     private String retirementTime;
     private int overhaulsNumber;

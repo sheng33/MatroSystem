@@ -4,15 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RuningTimeDao {
+public class RuningTimeVo {
     private int id;
-    private int nowSite;
-    private int train;
-    private int line;
-    private int nextSite;
-    private int state;
+    private String nowSite;
+    private String train;
+    private String line;
+    private String nextSite;
+    private String state;
     private String runTime;
 }
