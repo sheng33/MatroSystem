@@ -16,6 +16,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import lombok.SneakyThrows;
+import sample.Dao.LineSiteDao;
+import sample.Dao.RuningTimeDao;
 import sample.Dao.RuningTimeVo;
 import sample.Dao.RuningTimeEnum;
 import sample.util.StageManager;
@@ -131,7 +133,8 @@ public class RuningTimeController implements Initializable {
 
     }
     ObservableList<RuningTimeVo> data =FXCollections.observableArrayList();
-    ArrayList<RuningTimeVo> dataList = new ArrayList<>();
+    ArrayList<RuningTimeVo> dataListVo = new ArrayList<>();
+    ArrayList<RuningTimeDao> dataListDao = new ArrayList<>();
     @FXML
     void scrollToColumn(ActionEvent event) {
         System.out.println("页面滚动B");
@@ -139,16 +142,18 @@ public class RuningTimeController implements Initializable {
     public void init() throws SQLException {
         ResultSet resultSet = jdbcUtil.getRuningTimeAll();
         while(resultSet.next()){
-            RuningTimeVo dao = new RuningTimeVo();
+            RuningTimeVo vo = new RuningTimeVo();
+            RuningTimeDao dao = new RuningTimeDao();
             dao.setId(resultSet.getInt(1));
-            dao.setNowSite(jdbcUtil.getSiteName(resultSet.getInt(2)));
-            dao.setTrain(jdbcUtil.getTrainName(resultSet.getInt(3)));
-            dao.setLine(jdbcUtil.getLineName(resultSet.getInt(4)));
-            dao.setNextSite(jdbcUtil.getSiteName(resultSet.getInt(5)));
-            dao.setState(RuningTimeEnum.getName(resultSet.getInt(6)));
+            dao.setNowSite(resultSet.getInt(2));
+            dao.setTrain(resultSet.getInt(3));
+            dao.setLine(resultSet.getInt(4));
+            dao.setNextSite(resultSet.getInt(5));
+            dao.setState(resultSet.getInt(6));
             dao.setRunTime(resultSet.getString(7));
-            dataList.add(dao);
-            data.add(dao);
+            dataListVo.add(dao.getRuningTimeVo());
+            dataListDao.add(dao);
+            data.add(vo);
         }
         train.setCellValueFactory(new PropertyValueFactory<>("train"));
         state.setCellValueFactory(new PropertyValueFactory<>("state"));
@@ -169,36 +174,64 @@ public class RuningTimeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         init();
-//        addSite(null);
-//        addTrain(null);
-//        addLayer(null);
-//        addLine(null);
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    while(true){
-                        Thread.sleep(1000);
-                        if (dataList.isEmpty()){
-                            init();
-                        }
-                        update();
+        Runnable runnable = () -> {
+            try {
+                while(true){
+                    simulation();
+                    Thread.sleep(1000);
+                    if (dataListVo.isEmpty()){
+                        init();
                     }
-                } catch (InterruptedException | SQLException e) {
-                    e.printStackTrace();
+                    update();
                 }
+            } catch (InterruptedException | SQLException e) {
+                e.printStackTrace();
             }
         };
         new Thread(runnable).start();
     }
     void update(){
         this.data.clear();
-        this.data.addAll(dataList);
+        this.data.addAll(dataListVo);
     }
 
     //模拟列车运行
-    private void simulation(){
-
+    private void simulation() throws InterruptedException, SQLException {
+        Thread.sleep(4000);
+        int count = 0;
+        for (RuningTimeVo runingTimeVo : dataListVo) {
+//            dataListVo.remove(runingTimeVo);
+            int state = RuningTimeEnum.getValue(runingTimeVo.getState())+1;
+            if (state==6) continue;
+            if (state==5) state = 1;
+            if (state==1){
+                runingTimeVo.setNowSite(runingTimeVo.getNextSite());
+            }
+            if (state==3||state==2){
+                RuningTimeDao dao = dataListDao.get(count);
+                LineSiteDao siteDao =  jdbcUtil.getLineSiteByLineIdAndByStieId(dao.getLine(),dao.getNextSite());
+                dao.setNowSite(siteDao.getNowSiteId());
+                dao.setNextSite(jdbcUtil.getNextSiteId(dao.getLine(),siteDao.getOperationDirection(),siteDao.getLinePosition()+1));
+                String nextSiteName = jdbcUtil.getSiteName(dao.getNowSite());
+                if (!nextSiteName.equals(""))  runingTimeVo.setNextSite(jdbcUtil.getSiteName(dao.getNowSite()));
+                else runingTimeVo.setState(RuningTimeEnum.getName(5));
+            }
+            runingTimeVo.setState(RuningTimeEnum.getName(state));
+//            dataListVo.addAll(data);
+            count++;
+        }
+//        ResultSet resultSet = jdbcUtil.getRuningTimeAll();
+//        while(resultSet.next()){
+//            RuningTimeVo dao = new RuningTimeVo();
+//            dao.setId(resultSet.getInt(1));
+//            dao.setNowSite(jdbcUtil.getSiteName(resultSet.getInt(2)));
+//            dao.setTrain(jdbcUtil.getTrainName(resultSet.getInt(3)));
+//            dao.setLine(jdbcUtil.getLineName(resultSet.getInt(4)));
+//            dao.setNextSite(jdbcUtil.getSiteName(resultSet.getInt(5)));
+//            dao.setState(RuningTimeEnum.getName(resultSet.getInt(6)));
+//            dao.setRunTime(resultSet.getString(7));
+//            dataListVo.add(dao);
+//        }
     }
 
 }

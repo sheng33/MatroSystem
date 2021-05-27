@@ -1,7 +1,7 @@
 package sample.Dao;
 
 public  enum RuningTimeEnum {
-    Inbound(0,"入站"),Outbund(1,"出站"),Waiting(2,"等待中"),Inroute(3,"途中"),Error(-1,"故障"),Nodeparture(4,"未发车");
+    Inbound(1,"入站"),Outbund(2,"已到站"),Waiting(3,"出站"),Inroute(4,"途中"),End(5,"已结束"),Error(-1,"故障"),Nodeparture(0,"未发车");
     private final Integer value;
     private final String name;
     private RuningTimeEnum(Integer value,String name){

@@ -28,7 +28,7 @@ public  class jdbcUtil {
         while(resultSet.next()){
             return resultSet.getString(1);
         }
-        return resultSet.getString(1);
+        return "";
     }
     public static int getSiteId(String siteName) throws SQLException{
         Statement stmt = conn.createStatement();
@@ -158,6 +158,25 @@ public  class jdbcUtil {
         }
         return lineSiteDao;
     }
+
+    public static LineSiteDao getLineSiteByLineIdAndByStieId(int lineId,int siteId) throws SQLException {
+        Statement stmt = conn.createStatement();
+        String sql = "Select * From LineSiteTable " +
+                "Where  lineId = "+lineId+" AND nowSiteId = "+siteId;
+        ResultSet resultSet = stmt.executeQuery(sql);
+        LineSiteDao lineSiteDao = new LineSiteDao();
+        while(resultSet.next()){
+            lineSiteDao.setLineId(resultSet.getInt(1));
+            lineSiteDao.setNowSiteId(resultSet.getInt(2));
+            lineSiteDao.setLayerId(resultSet.getInt(3));
+            lineSiteDao.setOperationDirection(resultSet.getString(4));
+            lineSiteDao.setLinePosition(resultSet.getInt(5));
+            lineSiteDao.setIsStartSite(resultSet.getInt(6));
+            lineSiteDao.setIsEndSite(resultSet.getInt(7));
+        }
+        return lineSiteDao;
+    }
+
     //比较时间区间函数
     public static boolean isEffectiveDate(Date startTime, Date endTime) throws ParseException {
         Date nowTime = new Date();
