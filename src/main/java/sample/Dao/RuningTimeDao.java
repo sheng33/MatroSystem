@@ -18,7 +18,6 @@ public class RuningTimeDao {
     private int nextSite;
     private int state;
     private String runTime;
-
     public RuningTimeVo getRuningTimeVo() throws SQLException {
         RuningTimeVo vo = new RuningTimeVo();
         vo.setId(this.getId());

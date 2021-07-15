@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+
+<FlowPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="320.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.AddTrainController">
+   <children>
+      <VBox>
+         <children>
+            <FlowPane prefHeight="38.0" prefWidth="348.0" prefWrapLength="50.0" style="-fx-line-height: 10px;">
+               <children>
+                  <Label text="列车名称">
+                     <FlowPane.margin>
+                        <Insets left="30.0" right="20.0" top="10.0" />
+                     </FlowPane.margin>
+                  </Label>
+                  <TextField fx:id="trainName" alignment="BOTTOM_LEFT" >
+                     <FlowPane.margin>
+                        <Insets top="10.0" />
+                     </FlowPane.margin>
+                  </TextField>
+               </children>
+            </FlowPane>
+            <FlowPane prefHeight="34.0" prefWrapLength="50.0">
+               <children>
+                  <Label text="列车类型">
+                     <FlowPane.margin>
+                        <Insets left="30.0" right="20.0" />
+                     </FlowPane.margin>
+                  </Label>
+                  <MenuButton fx:id="trainType" mnemonicParsing="false" text="请选择" />
+               </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </FlowPane>
+            <FlowPane prefHeight="34.0" prefWrapLength="50.0">
+               <children>
+                  <Label text="所属线路">
+                     <FlowPane.margin>
+                        <Insets left="30.0" right="20.0" />
+                     </FlowPane.margin>
+                  </Label>
+                  <MenuButton fx:id="lineName" mnemonicParsing="false" text="请选择" />
+               </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </FlowPane>
+            <FlowPane prefHeight="20.0" prefWrapLength="50.0">
+               <children>
+                  <Label text="服役时间">
+                     <FlowPane.margin>
+                        <Insets left="30.0" right="20.0" />
+                     </FlowPane.margin>
+                  </Label>
+                  <DatePicker fx:id="serviceTime" />
+               </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </FlowPane>
+         </children>
+      </VBox>
+      <Button fx:id="submit" mnemonicParsing="false" onMouseClicked="#onClicka" prefWidth="150.0" text="提交" textAlignment="CENTER">
+         <FlowPane.margin>
+            <Insets left="90.0" top="20.0" />
+         </FlowPane.margin>
+      </Button>
+   </children>
+</FlowPane>

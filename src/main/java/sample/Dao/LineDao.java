@@ -15,7 +15,6 @@ public class LineDao {
     private String lineName;
     private String firstRunTime;
     private String endRunTime;
-
     public LineDao(String lineName, String firstRunTime, String endRunTime) {
         this.lineName = lineName;
         this.firstRunTime = firstRunTime;

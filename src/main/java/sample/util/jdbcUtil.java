@@ -21,6 +21,14 @@ public  class jdbcUtil {
             throwables.printStackTrace();
         }
     }
+//    static {
+//        try {
+//            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+//            conn = DriverManager.getConnection("jdbc:sqlserver://192.168.200.200:1433;DataBaseName=metroService", "sheng", "sheng");
+//        }  catch (SQLException | ClassNotFoundException throwables) {
+//            throwables.printStackTrace();
+//        }
+//    }
     public static String getSiteName(int Id) throws SQLException{
         Statement stmt = conn.createStatement();
         String sql = "Select siteName From SiteTable Where nowSiteId = "+Id;

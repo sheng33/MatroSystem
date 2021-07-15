@@ -12,20 +12,12 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class AddLayerController implements Initializable {
-
     @FXML
     private TextField siteName;
-
     @FXML
     private ChoiceBox<String> level;
-
-
     @FXML
     private CheckBox isEnable;
-
-    @FXML
-    private Button submit;
-
     @FXML
     void onClicka(MouseEvent event) throws SQLException {
         LayerDao layerDao = new LayerDao();

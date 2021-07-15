@@ -19,7 +19,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class SetSiteLineController implements Initializable {
+public class AddSiteLineController implements Initializable {
     @FXML
     private TextField siteName;
 
@@ -27,16 +27,10 @@ public class SetSiteLineController implements Initializable {
     private MenuButton siteType;
 
     @FXML
-    private Button checkLayer;
-
-    @FXML
     private MenuButton layerMenu;
 
     @FXML
     private TextField lineCount;
-
-    @FXML
-    private Button submit;
     @FXML
     void checkLayer(MouseEvent event) throws SQLException {
         layerMenu.getItems().clear();
@@ -97,7 +91,6 @@ public class SetSiteLineController implements Initializable {
             controller.addSiteInfo(tempSiteInfo);
         }
     }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         MenuItem menuItem1 = new MenuItem();

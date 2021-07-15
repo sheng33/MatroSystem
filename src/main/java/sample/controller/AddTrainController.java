@@ -32,10 +32,6 @@ public class AddTrainController implements Initializable {
 
     @FXML
     private DatePicker serviceTime;
-
-    @FXML
-    private Button submit;
-
     private void initTrainType(){
         HashMap<Integer,String> map = TrainTypeEnum.getAll(); //读取列车类型枚举类型
         for (int i = 0; i <map.size(); i++) {
@@ -61,7 +57,6 @@ public class AddTrainController implements Initializable {
                 lineDao.setEndRunTime(resultSet.getString(4));
                 lineDaos.add(lineDao);
             }
-
             for (int i = 0; i < lineDaos.size(); i++) {
                 MenuItem menuItem = new MenuItem();
                 menuItem.setId(String.valueOf(lineDaos.get(i).getLineId()));
@@ -76,9 +71,6 @@ public class AddTrainController implements Initializable {
             System.out.println("读取线路信息失败");
             throwables.printStackTrace();
         }
-
-
-
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -127,5 +119,4 @@ public class AddTrainController implements Initializable {
         AlertUtil.openAlert("创建成功","创建成功", Alert.AlertType.INFORMATION);
         Platform.exit();
     }
-
 }

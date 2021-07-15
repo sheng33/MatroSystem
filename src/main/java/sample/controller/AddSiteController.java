@@ -19,21 +19,14 @@ import java.util.ResourceBundle;
 public class AddSiteController implements Initializable {
     @FXML
     private TextField siteName;
-
     @FXML
     private Spinner<String> startTimeHH;
-
     @FXML
     private Spinner<String> startTimeMM;
-
     @FXML
     private Spinner<String> endTimeHH;
-
     @FXML
     private Spinner<String> endTimeMM;
-
-    @FXML
-    private Button submit;
     private void initTIme(){
         startTimeHH.setEditable(true);
         startTimeMM.setEditable(true);
@@ -44,8 +37,6 @@ public class AddSiteController implements Initializable {
         endTimeHH.setPromptText("00");
         endTimeMM.setPromptText("00");
     }
-
-
     @FXML
     void onClicka(MouseEvent event) {
         if (siteName.getText().equals("")){
@@ -65,7 +56,6 @@ public class AddSiteController implements Initializable {
             Platform.exit();
         }
     }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initTIme();

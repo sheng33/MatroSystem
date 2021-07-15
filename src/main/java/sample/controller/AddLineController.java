@@ -21,45 +21,28 @@ import java.util.ResourceBundle;
 public class AddLineController implements Initializable {
     @FXML
     private TextField lineName;
-
-    @FXML
-    private Button submit;
-
     @FXML
     private Spinner<String> startTimeHH;
-
     @FXML
     private Spinner<String> startTimeMM;
-
     @FXML
     private Spinner<String> endTimeHH;
-
     @FXML
     private Spinner<String> endTimeMM;
-
     @FXML
     private RadioButton pos1;
-
     @FXML
     private RadioButton pos2;
-
-    @FXML
-    private Button addTrain;
-
     @FXML
     private TableView<TempSiteInfo> siteTable;
-
     @FXML
     private TableColumn<String, String> siteName;
-
     @FXML
     private TableColumn<String, String> lineIndex;
-
     @FXML
     private TableColumn<String, String> siteType;
     @FXML
     private TableColumn<String, String> layerCount;
-
     @FXML
     void submit(MouseEvent event) throws SQLException {
         int pd = 0;
@@ -96,15 +79,11 @@ public class AddLineController implements Initializable {
                 lineSiteDao.setLinePosition(Integer.parseInt(data.get(i).getIndex()));
                 jdbcUtil.addLineSiteTable(lineSiteDao);
             }
-
         }
-
-
     }
-
     @FXML
     void addTrain(MouseEvent event) {
-        StageManager.getStage("../../setSiteLine.fxml","增加列车");
+        StageManager.getStage("../../addSiteLine.fxml","增加列车");
     }
     ObservableList<TempSiteInfo> data = FXCollections.observableArrayList();
     public void addSiteInfo(TempSiteInfo siteInfo){

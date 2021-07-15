@@ -54,5 +54,4 @@ public class CoreController {
         if (dao.getLinePosition()==0) return true;
         return false;
     }
-
 }
